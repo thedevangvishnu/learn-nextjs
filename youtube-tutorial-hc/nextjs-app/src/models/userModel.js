@@ -1,5 +1,10 @@
 import mongoose from "mongoose";
 
+if (process.env.NODE_ENV === "development") {
+  mongoose.models = {};
+  mongoose.modelSchemas = {};
+}
+
 const userSchema = new mongoose.Schema({
   username: { type: String, required: [true, "Username is required!"] },
   email: {

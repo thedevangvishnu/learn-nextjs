@@ -1,18 +1,41 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import axios from "axios";
 
 const LoginPage = () => {
+  const [buttonDisabled, setButtonDisabled] = useState(false);
   const [user, setUser] = useState({
-    username: "",
     email: "",
     password: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
 
-  const onBtnClick = () => {};
+  const router = useRouter();
+
+  useEffect(() => {
+    if (user.email.length > 0 && user.password.length > 0) {
+      setButtonDisabled(false);
+    } else {
+      setButtonDisabled(true);
+    }
+  }, [user]);
+
+  const onBtnClick = async () => {
+    try {
+      setIsLoading(true);
+
+      const response = await axios.post("/api/users/login", user);
+      console.log("Login success!", response.data);
+      router.push("/profile");
+    } catch (error) {
+      console.log("Error loggin in", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2 gap-4">
@@ -49,8 +72,9 @@ const LoginPage = () => {
       <button
         className="bg-slate-200 px-8 py-3 text-black font-semibold uppercase cursor-pointer hover:bg-slate-300 focus:bg-slate-300 border-none outline-none"
         onClick={onBtnClick}
+        disabled={buttonDisabled}
       >
-        Sign in
+        {isLoading ? "Loading..." : "Sign in"}
       </button>
       <p>
         Don't have an account?{" "}

@@ -38,6 +38,7 @@ const Signup = () => {
     } catch (error: any) {
       toast.error(error.message);
     } finally {
+      setIsLoading(false);
     }
   };
 
