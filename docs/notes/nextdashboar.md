@@ -40,3 +40,37 @@
                 />
 
 ## Chapter 4: Creating Layouts and Pages
+
+- File-system routing
+
+  - NextJs implements a file-system routing, where the "app" directory server as the root route. Each folder inside the "app" directory becomes a new route appended to the "/"
+
+  - Important terms:
+
+    - Segments
+
+      - Mapping to a url, each part of the url acts as a segment (in the folder structure).
+      - Root segment: "app" directory --> corresponds to "/" route.
+      - Segment: "app/dashboard" directory --> corresponds to "/dashboard" route.
+        - one level inside the app directory.
+      - Segment: "app/dashboard/customers" directory --> corresponds to "/dashboard/customers" route.
+        - two levels inside the app directory.
+
+    - Layouts
+
+      - Layout is a special feature in Nextjs that allows to create a component that renders shared UI components as well the distict UI components (based on different rotues).
+      - Allows for partial rendering
+        - Once the layout is rendered, the shared elements of layout won't be re-rendered for any change and potential rendering in distinctive elements. This is known as "partial rendering."
+      - Root layout
+        - Inside "app" directory, "layout.tsx" file serves as the root layout for the entire app. Any styling, components inside this layout will be rendered on each route for the app.
+      - Route-specific layout
+        - Specific routes can have their own layout by using layout.tsx file inside "that route" directory.
+
+    - Conventions
+
+      - page.tsx: special file that renders a react component for that particular route (directory inside which page.tsx file is present).
+      - layout.tsx: special file to create layout.
+
+    - Colocation
+      - page.tsx is publicly accessible for that route which implemnets the root layout and the layout.tsx specific to that route.
+      - but there can be multiple components, test files and other files related to the page.tsx file for a route. These files that are "not" page.tsx and not "layout.tsx" are colocating (residing together) and won't be publicly accessible
