@@ -22,3 +22,12 @@
 - File based routing
 - SEO
 - Serverless Functions
+
+### Section 3: Build first project
+
+- using google fonts
+  - next/font/google: Google fonts
+  - next/font/local: Local fonts
+  - <fontname>.classname
+- using multiple fonts
+- metadata api
