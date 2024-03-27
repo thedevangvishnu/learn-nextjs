@@ -53,7 +53,7 @@
       - Root segment: "app" directory --> corresponds to "/" route.
       - Segment: "app/dashboard" directory --> corresponds to "/dashboard" route.
         - one level inside the app directory.
-      - Segment: "app/dashboard/customers" directory --> corresponds to "/dashboard/customers" route.
+      - Leaf Segment: "app/dashboard/customers" directory --> corresponds to "/dashboard/customers" route.
         - two levels inside the app directory.
 
     - Layouts
@@ -74,3 +74,52 @@
     - Colocation
       - page.tsx is publicly accessible for that route which implemnets the root layout and the layout.tsx specific to that route.
       - but there can be multiple components, test files and other files related to the page.tsx file for a route. These files that are "not" page.tsx and not "layout.tsx" are colocating (residing together) and won't be publicly accessible
+
+## Chapter 5: Navigation
+
+- Link component from next/link
+
+  - similar to Link component from react-router-dom
+  - enables client-side navigation without full hard reload
+
+- Code splitting for improved navigation
+
+  - To improve navigation, Nextjs code splits (divides into smaller chunks) the application based on route segments. In tradional react app, the entire app is intially loaded and using Link from react-router-dom, client-side navigation is achieved.
+  - But nextjs improves performance and results in "near-instant" load times.
+    - First, due to code splitting, the browser only loads the route-specific files which are lighter.
+    - Secondly, in production, when Nextjs encounters a Link component, it pre-fetches the route-specific content for that Link and keeps it handy. This makes the page transition "near-instant."
+
+- Styling active links
+  - we can use clsx module to style active links.
+  - usePathName() is a hook that gives back the pathname for the current route.
+
+## Chapter 7: Fetching Data
+
+- Data fetching approaches:
+  - through an API layer
+  - through server components using SQL
+- Request waterfalls
+- Parallel data fetching
+  - Advantages and disadvantages
+
+## Chapter 8: Static and dynamic rendering
+
+- Static rendering (Static site generation)
+- Dynamic rendering (Server side rendering)
+- Advantages and disadvantages
+  - With dynamic rendering, your application is only as fast as your slowest data fetch.
+
+## Chapter 9: Streaming
+
+- Streaming and what it is
+- Two ways:
+  - Streaming at app level
+  - Streaming at component level
+- How to implement streaming
+  - using loading.tsx
+    - Suspense
+    - interruptable navigation
+- Route groups using () syntax
+- React Suspense
+- Where to place Suspense boundaries
+  - Good practice to fetch data at the component level that need it and wrap the component in a Suspense
