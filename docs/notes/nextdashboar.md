@@ -106,6 +106,7 @@
 
 - Static rendering (Static site generation)
 - Dynamic rendering (Server side rendering)
+  - using {unStable_noStore} from next/cache
 - Advantages and disadvantages
   - With dynamic rendering, your application is only as fast as your slowest data fetch.
 
