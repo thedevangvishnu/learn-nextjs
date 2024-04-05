@@ -209,3 +209,53 @@ In Next.js, there are two main ways to prefetch routes:
 - "soft navigation" between pages, ensuring only the route segments that have changed are re-rendered (partial rendering). Doesn't enable hard-refreshing inside the browser
 
 - In forward and backward navigation, the scroll position is maintained
+
+## 04 - Loading UI and Streaming
+
+### `laoding.ts` file
+
+- loading.js helps you create meaningful Loading UI with React Suspense.
+- With this convention, you can show an instant loading state from the server while the content of a route segment loads
+
+```ts
+// inside /app/dashboard/loading.tsx
+
+export default function Loading() {
+  // You can add any UI inside Loading, including a Skeleton.
+  return <LoadingSkeleton />;
+}
+```
+
+### Streaming with Suspense
+
+#### What is Streaming
+
+- Streaming is a data fetching technique in programming that essentially divides a large dataset into smaller chunks called "streams." Each of these streams are accessed as they are made available.
+
+- Streaming allows you to break down the page's HTML into smaller chunks and progressively send those chunks from the server to the client.
+
+- Streaming works well with React's component model because each component can be considered a chunk.
+
+#### `<Suspense>` component
+
+- This is a component provided by React that allows to implement streaming and also provides a way to show loading/error UI when the streaming suspends.
+
+- `<Suspense>` works by wrapping a component that performs an asynchronous action (e.g. fetch data), showing fallback UI (e.g. skeleton, spinner) while it's happening, and then swapping in your component once the action completes.
+
+```ts
+import { Suspense } from "react";
+import { PostFeed, Weather } from "./Components";
+
+export default function Posts() {
+  return (
+    <section>
+      <Suspense fallback={<p>Loading feed...</p>}>
+        <PostFeed />
+      </Suspense>
+      <Suspense fallback={<p>Loading weather...</p>}>
+        <Weather />
+      </Suspense>
+    </section>
+  );
+}
+```
