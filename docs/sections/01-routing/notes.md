@@ -259,3 +259,98 @@ export default function Posts() {
   );
 }
 ```
+
+## 07 - Route Groups
+
+- Better understanding through visual. View them [here](https://nextjs.org/docs/app/building-your-application/routing/route-groups)
+
+- Route groups are useful for:
+
+  - Organizing routes into groups e.g. by site section, intent, or team.
+  - Enabling nested layouts in the same route segment level:
+    - Creating multiple nested layouts in the same segment, including multiple root layouts
+    - Adding a layout to a subset of routes in a common segment
+
+- A route group can be created by wrapping a folder's name in parenthesis: (folderName)
+
+### Creating multiple root layouts
+
+- To create multiple root layouts, remove the top-level `layout.js` file, and add a `layout.js` file inside each route groups.
+
+- This is useful for partitioning an application into sections that have a completely different UI or experience.
+
+- The `<html> `and `<body>` tags need to be added to each root layout.
+
+- To note:
+
+  - The naming of route groups has no special significance other than for organization. They do not affect the URL path.
+
+  - Routes that include a route group should not resolve to the same URL path as other routes. For example, `(marketing)/about/page.js` and `(shop)/about/page.js` would both resolve to `/about` and cause an error.
+
+  - If you use multiple root layouts without a top-level `layout.js` file, your home page.js file should be defined in one of the route groups, For example: `app/(marketing)/page.js`.
+
+  - Navigating across multiple root layouts will cause a full page load. For example, navigating from `/cart` that uses `app/(shop)/layout.js` to `/blog` that uses `app/(marketing)/layout.js` will cause a full page load. This only applies to multiple root layouts.
+
+## 08 - Project Organization
+
+- Better understanding through visual. View them [here](https://nextjs.org/docs/app/building-your-application/routing/colocation#module-path-aliases)
+
+### Colocation
+
+- Even though route structure is defined through folders, a route is not publicly accessible until a page.js or route.js file is added to a route segment.
+
+- This means that project files can be safely colocated inside route segments in the app directory without accidentally being routable.
+
+- Note: This is different from the pages directory, where any file in pages is considered a route.
+
+### Project organization features
+
+#### A - Private folders (`_<foldername>`)
+
+- Private folders can be created by prefixing a folder with an underscore: `_folderName`
+
+- This indicates the folder is a private implementation detail and should not be considered by the routing system, thereby opting the folder and all its subfolders out of routing, even if any folder has page.ts or route.ts inside it.
+
+- You can create URL segments that start with an underscore by prefixing the folder name with `%5F` (the URL-encoded form of an underscore): `%5FfolderName`.
+
+#### B - Route groups
+
+- Route groups can be created by wrapping a folder in parenthesis: (folderName)
+
+- View section 07 notes
+
+#### C - `src` folder
+
+- Next.js supports storing application code (including app) inside an optional src directory. This separates application code from project configuration files which mostly live in the root of a project.
+
+#### D - Module path aliases
+
+- `@` syntax for importing.
+- Can be configured in `tsconfig.json` file by adding `paths` in `compilerOptions`
+
+```ts
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"]
+    }
+  }
+
+  // all imports can be made from `@/`  ---> root of the project
+}
+```
+
+### Project organization strategies
+
+#### A - Storing all files inside `app` folder
+
+- This strategy stores all application code in shared folders in the root of your project and keeps the app directory purely for routing purposes.
+
+#### B - Storing all files outside `app` folder
+
+- This strategy stores all application code in shared folders in the root of the app directory.
+
+#### C - Storing files based on feature or split
+
+- This strategy stores globally shared application code in the root app directory and splits more specific application code into the route segments that use them.
