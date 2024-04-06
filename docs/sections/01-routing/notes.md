@@ -354,3 +354,29 @@ export default function Posts() {
 #### C - Storing files based on feature or split
 
 - This strategy stores globally shared application code in the root app directory and splits more specific application code into the route segments that use them.
+
+## 09 - Dynamic Routes
+
+- When you don't know the exact segment names ahead of time and want to create routes from dynamic data, you can use "Dynamic Segments" that are filled in at request time or prerendered at build time.
+
+- Syntax: `[folderName]`. For example, `[id]` or `[slug]`.
+
+- For example, a blog could include the following route` app/blog/[slug]/page.js` where `[slug]` is the Dynamic Segment for blog posts.
+
+```ts
+export default function Page({ params }: { params: { slug: string } }) {
+  return <div>My Post: {params.slug}</div>;
+}
+```
+
+### Catch-all Segments
+
+- Syntax: `[...folderName]`
+
+- For example, `app/shop/[...slug]/page.js` will match `/shop/clothes`, but also `/shop/clothes/tops`, `/shop/clothes/tops/t-shirts`, and so on.
+
+### Optional catch-all segments
+
+- Syntax: `[[...folderName]]`
+
+- For example, `app/shop/[[...slug]]/page.js` will also match `/shop` (the route without the parameter is also matched), in addition to `/shop/clothes`,` /shop/clothes/tops`, `/shop/clothes/tops/t-shirts`.
